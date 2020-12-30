@@ -1,0 +1,4 @@
+-r test.txt
+black
+flake8
+isort
