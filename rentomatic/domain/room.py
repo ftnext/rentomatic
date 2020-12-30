@@ -9,3 +9,12 @@ class Room:
     @classmethod
     def from_dict(cls, adict):
         return cls(**adict)
+
+    def to_dict(self):
+        return {
+            "code": self.code,
+            "size": self.size,
+            "price": self.price,
+            "longitude": self.longitude,
+            "latitude": self.latitude,
+        }
