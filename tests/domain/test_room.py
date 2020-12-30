@@ -48,3 +48,17 @@ def test_room_model_to_dict():
     room = r.Room.from_dict(room_dict)
 
     assert room.to_dict() == room_dict
+
+
+def test_room_model_comparison():
+    room_dict = {
+        "code": uuid.uuid4(),
+        "size": 255,
+        "price": 14,
+        "longitude": -0.09999875,
+        "latitude": 51.75433296,
+    }
+    room1 = r.Room.from_dict(room_dict)
+    room2 = r.Room.from_dict(room_dict)
+
+    assert room1 == room2
