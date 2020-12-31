@@ -6,5 +6,5 @@ class RoomListUseCase:
         self.repo = repo
 
     def execute(self, request):
-        rooms = self.repo.list(filters=None)
+        rooms = self.repo.list(filters=request.filters)
         return res.ResponseSuccess(rooms)
