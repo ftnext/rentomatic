@@ -17,7 +17,7 @@ def room_dicts():
         {
             "code": "fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a",
             "size": 405,
-            "price": 60,
+            "price": 66,
             "longitude": 0.18228006,
             "latitude": 51.74640997,
         },
@@ -54,3 +54,12 @@ def test_repository_list_with_code_equal_filter(room_dicts):
 
     assert len(repo_rooms) == 1
     assert repo_rooms[0].code == "fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a"
+
+
+def test_repository_list_with_price_equal_filter(room_dicts):
+    repo = memrepo.MemRepo(room_dicts)
+
+    repo_rooms = repo.list(filters={"price__eq": 60})
+
+    assert len(repo_rooms) == 1
+    assert repo_rooms[0].code == "913694c6-435a-4366-ba0d-da5334a611b2"
