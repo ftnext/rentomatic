@@ -1,4 +1,6 @@
 class ResponseFailure:
+    PARAMETERS_ERROR = "ParametersError"
+
     def __init__(self, type_, message):
         self.type = type_
         self.message = self._format_message(message)
@@ -14,6 +16,10 @@ class ResponseFailure:
     @property
     def value(self):
         return {"type": self.type, "message": self.message}
+
+    @classmethod
+    def build_from_invalid_request_object(cls, invalid_request_object):
+        return cls(cls.PARAMETERS_ERROR, "")
 
 
 class ResponseSuccess:
