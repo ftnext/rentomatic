@@ -1,6 +1,6 @@
 import json
 
-from flask import Blueprint, Response
+from flask import Blueprint, Response, request
 
 from rentomatic.repository import memrepo as mr
 from rentomatic.request_objects import room_list_request_object as req
@@ -35,6 +35,9 @@ room3 = {
 @blueprint.route("/rooms", methods=["GET"])
 def room():
     query_str_params = {"filters": {}}
+    for arg, values in request.args.items():
+        if arg.startswith("filter_"):
+            query_str_params["filters"][arg.replace("filter_", "")] = values
     request_object = req.RoomListRequestObject.from_dict(query_str_params)
 
     repo = mr.MemRepo([room1, room2, room3])
