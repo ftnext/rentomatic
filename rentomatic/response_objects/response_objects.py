@@ -1,6 +1,7 @@
 class ResponseFailure:
     def __init__(self, type_, message):
-        pass
+        self.type = type_
+        self.message = message
 
     def __bool__(self):
         return False
