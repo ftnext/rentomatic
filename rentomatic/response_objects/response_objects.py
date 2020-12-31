@@ -6,6 +6,10 @@ class ResponseFailure:
     def __bool__(self):
         return False
 
+    @property
+    def value(self):
+        return {"type": self.type, "message": self.message}
+
 
 class ResponseSuccess:
     SUCCESS = "Success"
