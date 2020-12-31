@@ -1,4 +1,3 @@
-from rentomatic.request_objects import room_list_request_object as req
 from rentomatic.response_objects import response_objects as res
 
 
@@ -7,7 +6,7 @@ class RoomListUseCase:
         self.repo = repo
 
     def execute(self, request_object):
-        if isinstance(request_object, req.InvalidRequestObject):
+        if not request_object:
             return res.ResponseFailure.build_from_invalid_request_object(
                 request_object
             )
