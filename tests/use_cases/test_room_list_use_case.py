@@ -5,6 +5,7 @@ import pytest
 
 from rentomatic.domain import room as r
 from rentomatic.request_objects import room_list_request_object as req
+from rentomatic.response_objects import response_objects as res
 from rentomatic.use_cases import room_list_use_case as uc
 
 
@@ -71,3 +72,19 @@ def test_room_list_with_parameters(domain_rooms):
     assert bool(response_object) is True
     repo.list.assert_called_with(filters=query_filters)
     assert response_object.value == domain_rooms
+
+
+def test_room_list_handles_generic_error():
+    repo = mock.Mock()
+    repo.list.side_effect = Exception("Just an error message")
+
+    room_list_use_case = uc.RoomListUseCase(repo)
+    request_object = req.RoomListRequestObject.from_dict({})
+
+    response_object = room_list_use_case.execute(request_object)
+
+    assert bool(response_object) is False
+    assert response_object.value == {
+        "type": res.ResponseFailure.SYSTEM_ERROR,
+        "message": "Exception: Just an error message",
+    }
