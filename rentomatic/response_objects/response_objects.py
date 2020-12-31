@@ -1,5 +1,6 @@
 class ResponseFailure:
     PARAMETERS_ERROR = "ParametersError"
+    RESOURCE_ERROR = "ResourceError"
 
     def __init__(self, type_, message):
         self.type = type_
@@ -26,6 +27,10 @@ class ResponseFailure:
             ]
         )
         return cls(cls.PARAMETERS_ERROR, message)
+
+    @classmethod
+    def build_resource_error(cls, message):
+        return cls(cls.RESOURCE_ERROR, message)
 
 
 class ResponseSuccess:
