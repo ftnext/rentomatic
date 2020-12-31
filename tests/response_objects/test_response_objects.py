@@ -91,3 +91,11 @@ def test_response_failure_build_resource_error():
     assert bool(response) is False
     assert response.type == res.ResponseFailure.RESOURCE_ERROR
     assert response.message == "test message"
+
+
+def test_response_failure_build_parameters_error():
+    response = res.ResponseFailure.build_parameters_error("test message")
+
+    assert bool(response) is False
+    assert response.type == res.ResponseFailure.PARAMETERS_ERROR
+    assert response.message == "test message"
