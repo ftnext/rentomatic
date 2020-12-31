@@ -35,3 +35,11 @@ def test_build_room_list_request_object_from_dict_with_filters_wrong():
     assert request.has_errors()
     assert request.errors[0]["parameter"] == "filters"
     assert bool(request) is False
+
+
+def test_build_room_list_request_object_from_dict_with_invalid_filters():
+    request = req.RoomListRequestObject.from_dict({"filters": 5})
+
+    assert request.has_errors()
+    assert request.errors[0]["parameter"] == "filters"
+    assert bool(request) is False
