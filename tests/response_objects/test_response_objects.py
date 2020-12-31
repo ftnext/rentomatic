@@ -31,3 +31,12 @@ def test_response_success_has_type_and_value(response_value):
 
 def test_response_failure_is_false(response_type, response_message):
     assert bool(res.ResponseFailure(response_type, response_message)) is False
+
+
+def test_response_failure_has_type_and_message(
+    response_type, response_message
+):
+    response = res.ResponseFailure(response_type, response_message)
+
+    assert response.type == response_type
+    assert response.message == response_message
