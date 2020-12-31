@@ -29,7 +29,7 @@ class RoomListRequestObject:
                     )
             if invalid_req.has_errors():
                 return invalid_req
-        return cls(**adict)
+        return cls(filters=adict.get("filters"))
 
     def __bool__(self):
         return True
