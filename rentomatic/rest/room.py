@@ -4,10 +4,18 @@ from flask import Blueprint, Response, request
 
 from rentomatic.repository import memrepo as mr
 from rentomatic.request_objects import room_list_request_object as req
+from rentomatic.response_objects import response_objects as res
 from rentomatic.serializers import room_json_serializer as ser
 from rentomatic.use_cases import room_list_use_case as uc
 
 blueprint = Blueprint("room", __name__)
+
+STATUS_CODES = {
+    res.ResponseSuccess.SUCCESS: 200,
+    res.ResponseFailure.RESOURCE_ERROR: 404,
+    res.ResponseFailure.PARAMETERS_ERROR: 400,
+    res.ResponseFailure.SYSTEM_ERROR: 500,
+}
 
 room1 = {
     "code": "f853578c-fc0f-4e65-81b8-566c5dffa35a",
@@ -47,5 +55,5 @@ def room():
     return Response(
         json.dumps(response.value, cls=ser.RoomJsonEncoder),
         mimetype="application/json",
-        status=200,
+        status=STATUS_CODES[response.type],
     )
