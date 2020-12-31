@@ -6,5 +6,10 @@ class RoomListUseCase:
         self.repo = repo
 
     def execute(self, request):
-        rooms = self.repo.list(filters=request.filters)
+        try:
+            rooms = self.repo.list(filters=request.filters)
+        except Exception as ex:
+            return res.ResponseFailure.build_system_error(
+                f"{ex.__class__.__name__}: {str(ex)}"
+            )
         return res.ResponseSuccess(rooms)
