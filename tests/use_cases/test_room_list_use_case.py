@@ -54,3 +54,20 @@ def test_room_list_without_parameters(domain_rooms):
     assert bool(response) is True
     repo.list.assert_called_with(filters=None)
     assert response.value == domain_rooms
+
+
+def test_room_list_with_parameters(domain_rooms):
+    repo = mock.Mock()
+    repo.list.return_value = domain_rooms
+
+    room_list_use_case = uc.RoomListUseCase(repo)
+    query_filters = {"code__eq": 5}
+    request_object = req.RoomListRequestObject.from_dict(
+        {"filters": query_filters}
+    )
+
+    response_object = room_list_use_case.execute(request_object)
+
+    assert bool(response_object) is True
+    repo.list.assert_called_with(filters=query_filters)
+    assert response_object.value == domain_rooms
