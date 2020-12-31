@@ -15,7 +15,16 @@ class InvalidRequestObject:
         return False
 
 
-class RoomListRequestObject:
+class ValidRequestObject:
+    @classmethod
+    def from_dict(cls, adict):
+        raise NotImplementedError
+
+    def __bool__(self):
+        return True
+
+
+class RoomListRequestObject(ValidRequestObject):
     accepted_filters = ["code__eq", "price__eq", "price__lt", "price__gt"]
 
     def __init__(self, filters=None):
@@ -39,6 +48,3 @@ class RoomListRequestObject:
                 return invalid_req
 
         return cls(filters=adict.get("filters"))
-
-    def __bool__(self):
-        return True
