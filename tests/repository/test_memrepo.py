@@ -63,3 +63,15 @@ def test_repository_list_with_price_equal_filter(room_dicts):
 
     assert len(repo_rooms) == 1
     assert repo_rooms[0].code == "913694c6-435a-4366-ba0d-da5334a611b2"
+
+
+def test_repository_list_with_price_less_than_filter(room_dicts):
+    repo = memrepo.MemRepo(room_dicts)
+
+    repo_rooms = repo.list(filters={"price__lt": 60})
+
+    assert len(repo_rooms) == 2
+    assert set([r.code for r in repo_rooms]) == {
+        "f853578c-fc0f-4e65-81b8-566c5dffa35a",
+        "eed76e77-55c1-41ce-985d-ca49bf6c0585",
+    }
