@@ -40,3 +40,12 @@ def test_response_failure_has_type_and_message(
 
     assert response.type == response_type
     assert response.message == response_message
+
+
+def test_response_failure_contains_value(response_type, response_message):
+    response = res.ResponseFailure(response_type, response_message)
+
+    assert response.value == {
+        "type": response_type,
+        "message": response_message,
+    }
