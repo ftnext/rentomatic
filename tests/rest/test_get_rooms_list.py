@@ -2,6 +2,7 @@ import json
 from unittest import mock
 
 from rentomatic.domain.room import Room
+from rentomatic.response_objects import response_objects as res
 
 room_dict = {
     "code": "3251a5bd-86be-428d-8ae9-6e51a8048c33",
@@ -16,11 +17,15 @@ rooms = [room]
 
 @mock.patch("rentomatic.use_cases.room_list_use_case.RoomListUseCase")
 def test_get(mock_use_case, client):
-    mock_use_case().execute.return_value = rooms
+    mock_use_case().execute.return_value = res.ResponseSuccess(rooms)
 
     http_response = client.get("/rooms")
 
     assert json.loads(http_response.data.decode("UTF-8")) == [room_dict]
-    mock_use_case().execute.assert_called_with()
+
+    mock_use_case().execute.assert_called()
+    args, kwargs = mock_use_case().execute.call_args
+    assert args[0].filters == {}  # args[0] is RequestObject
+
     assert http_response.status_code == 200
     assert http_response.mimetype == "application/json"
