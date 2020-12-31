@@ -4,7 +4,7 @@ class RoomListRequestObject:
 
     @classmethod
     def from_dict(cls, adict):
-        return cls()
+        return cls(**adict)
 
     def __bool__(self):
         return True
