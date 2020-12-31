@@ -69,3 +69,17 @@ def test_response_failure_from_empty_invalid_request_object():
 
     assert bool(response) is False
     assert response.type == res.ResponseFailure.PARAMETERS_ERROR
+
+
+def test_response_failure_from_invalid_request_with_errors():
+    request_object = req.InvalidRequestObject()
+    request_object.add_error("path", "Is mandatory")
+    request_object.add_error("path", "can't be blank")
+
+    response = res.ResponseFailure.build_from_invalid_request_object(
+        request_object
+    )
+
+    assert bool(response) is False
+    assert response.type == res.ResponseFailure.PARAMETERS_ERROR
+    assert response.message == "path: Is mandatory\npath: can't be blank"
