@@ -1,3 +1,6 @@
+import collections
+
+
 class InvalidRequestObject:
     def __init__(self):
         self.errors = []
@@ -22,13 +25,19 @@ class RoomListRequestObject:
     def from_dict(cls, adict):
         invalid_req = InvalidRequestObject()
         if "filters" in adict:
-            for key, value in adict["filters"].items():
+            filters = adict["filters"]
+            if not isinstance(filters, collections.abc.Mapping):
+                invalid_req.add_error("filters", "Is not mapping")
+                return invalid_req
+
+            for key, value in filters.items():
                 if key not in cls.accepted_filters:
                     invalid_req.add_error(
                         "filters", f"key {key} cannot be used"
                     )
             if invalid_req.has_errors():
                 return invalid_req
+
         return cls(filters=adict.get("filters"))
 
     def __bool__(self):
