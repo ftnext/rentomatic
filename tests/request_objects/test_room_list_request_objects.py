@@ -57,3 +57,14 @@ def test_build_room_list_request_object_accepted_filters(key):
 
     assert request.filters == filters
     assert bool(request) is True
+
+
+@pytest.mark.parametrize("key", ["code__lt", "code__gt"])
+def test_build_room_list_request_object_rejected_filters(key):
+    filters = {key: 1}
+
+    request = req.RoomListRequestObject.from_dict({"filters": filters})
+
+    assert request.has_errors()
+    assert request.errors[0]["parameter"] == "filters"
+    assert bool(request) is False
