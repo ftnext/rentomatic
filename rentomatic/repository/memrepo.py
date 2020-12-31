@@ -5,5 +5,5 @@ class MemRepo:
     def __init__(self, data):
         self.data = data
 
-    def list(self):
+    def list(self, filters=None):
         return [r.Room.from_dict(d) for d in self.data]
