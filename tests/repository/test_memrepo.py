@@ -87,3 +87,12 @@ def test_repository_list_with_price_greater_than_filter(room_dicts):
         "fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a",
         "913694c6-435a-4366-ba0d-da5334a611b2",
     }
+
+
+def test_repository_list_with_price_between_filter(room_dicts):
+    repo = memrepo.MemRepo(room_dicts)
+
+    repo_rooms = repo.list(filters={"price__lt": 66, "price__gt": 48})
+
+    assert len(repo_rooms) == 1
+    assert repo_rooms[0].code == "913694c6-435a-4366-ba0d-da5334a611b2"
