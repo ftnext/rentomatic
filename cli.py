@@ -13,7 +13,7 @@ room1 = {
 room2 = {
     "code": "fe2c3195-aeff-487a-a08f-e0bdc0ec6e9a",
     "size": 405,
-    "price": 60,
+    "price": 66,
     "longitude": 0.18228006,
     "latitude": 51.74640997,
 }
